@@ -1,0 +1,47 @@
+{
+    "#search_bar": 
+        {
+            "colours" : 
+            {
+                "dark_bg": "#FFFFFF",
+                "selected_bg": "#FFFFFF",
+                "normal_text": "#5000C9",
+                "normal_border": "#5000C9",
+                "text_cursor": "#000000"
+            },
+
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "20",
+                "border_width": "2",
+                "shadow_width": "2",
+                "padding": "6,4"
+            }
+                
+        },
+    "#convert_button":
+        {
+            "colours":
+            {   
+                "normal_bg": "#5000C9",
+                "hovered_bg": "#6500FD",
+                "hovered_text": "#FFFFFF"
+            },
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "25,25,25,25",
+                "border_width": "2",
+                "shadow_width": "2"
+            },
+            "images":
+                {
+                    "normal_image": 
+                        {
+                            "package": "resources.icons",
+                            "resource": "convert_icon.png"
+                        }
+                }
+        }
+}

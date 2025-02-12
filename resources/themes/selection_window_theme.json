@@ -1,0 +1,51 @@
+{
+    "#Mp4_button":
+        {
+            "colours":
+            {   
+                "normal_bg": "#D20000",
+                "hovered_bg": "#FF0000",
+                "disabled_bg": "#A80000",
+                "hovered_text": "#FFFFFF"
+            },
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "25,25,25,25",
+                "border_width": "2",
+                "shadow_width": "2"
+            },
+            "images":
+                {
+                    "normal_image": 
+                        {
+                            "package": "resources.icons",
+                            "resource": "Mp4_icon.png"
+                        }
+                }
+        },
+    "#Mp3_button":
+        {
+            "colours":
+            {   
+                "normal_bg": "#5000C9",
+                "hovered_bg": "#6500FD",
+                "hovered_text": "#FFFFFF"
+            },
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "25,25,25,25",
+                "border_width": "2",
+                "shadow_width": "2"
+            },
+            "images":
+                {
+                    "normal_image": 
+                        {
+                            "package": "resources.icons",
+                            "resource": "Mp3_icon.png"
+                        }
+                }
+        }
+}
