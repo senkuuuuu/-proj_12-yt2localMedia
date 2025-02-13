@@ -12,7 +12,11 @@ class SelectionWindow:
         self.clock = clock
         self.fps = fps
         self.time_delta = self.clock.tick(self.fps)/1000.0
+
+        #important media metadata
         self.url = url
+        self.file_type = None
+        self.path = None
 
         #setting up screen
         self.screen = screen
@@ -34,9 +38,10 @@ class SelectionWindow:
         self.logo_rect = self.logo.rect()
 
         #generating GUI elements
-        self.Mp3_button = self.gui_generator.button(position=(175, 200), dimension=(200, 250), text='', id='#Mp3_button', tool_tip='Convert YouTube Video into Mp3 format')
-        self.Mp4_button = self.gui_generator.button(position=(420, 200), dimension=(200, 250), text='', id='#Mp4_button', tool_tip='Convert YouTube Video into Mp4 format')
+        self.Mp3_button = self.gui_generator.button(position=(175, 200), dimension=(200, 250), text='', id='#Mp3_button', tool_tip='Convert YouTube Video into Mp3 format, this action cannot be canceled')
+        self.Mp4_button = self.gui_generator.button(position=(420, 200), dimension=(200, 250), text='', id='#Mp4_button', tool_tip='Convert YouTube Video into Mp4 format,  this action cannot be canceled')
 
+        self.buttons = [self.Mp3_button,self.Mp4_button]
     def run(self):
 
         while self.running:
@@ -57,13 +62,28 @@ class SelectionWindow:
                 
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == self.Mp3_button:
-                        result = [self.url, 'Mp3']
-                        self.running = False
-                        return result
+                        for button in self.buttons:
+                            button.disable()
+                        self.file_type = 'Mp3'
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                        
+                    
                     elif event.ui_element == self.Mp4_button:
-                        result = [self.url, 'Mp4']
-                        self.running = False
-                        return result
+                        for button in self.buttons:
+                            button.disable()
+                        self.file_type = 'Mp4'
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                    
+                if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
+                    self.path = event.text
+                    self.running = False
+
+                    return [self.url, self.path, self.file_type]
+                    
+                if event.type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.file_dialog:
+                    for button in self.buttons:
+                        button.enable()
+                        
                 
                 self.gui_manager.process_events(event)
 

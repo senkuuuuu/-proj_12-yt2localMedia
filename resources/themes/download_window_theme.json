@@ -1,0 +1,35 @@
+{
+    "#progress_bar": 
+        {
+            "colours" : 
+            {
+                "normal_text": "#FFFFFF",
+                "filled_bar": "#5900DF,#5100CA,180",
+                "unfilled_bar": "#575757"
+            },
+
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "20",
+                "padding": "6,4"
+            }
+                
+        },
+    "#download_label":
+        {
+            
+            "colours":
+                {
+                    "normal_text": "#6600FF"
+                },
+            "font":
+                {
+                    "name": "montserrat",
+                    "size": "50",
+                    "bold": "1",
+                    "italic": "0"
+                }
+                
+        }
+}

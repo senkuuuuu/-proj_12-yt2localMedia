@@ -57,22 +57,25 @@ class MainWindow:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
+                        self.convert_button.disable()
                         url = self.get_url()
                         if url:
                             return url
                         else:
-                            self.running = False
-                            pygame.quit()
+                            self.message_window =self.gui_generator.message_window(position=(300,150), dimension=(100,200), id='#warning', window_title='Alert!', always_on_top=True, html_message='The string sent is not a valid YouTube link, Try Again')
+                            
 
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == self.convert_button:
+                        self.convert_button.disable()
                         url = self.get_url()
                         if url:
                             return url
                         else:
-                            self.running = False
-                            pygame.quit()
-
+                            self.message_window = self.gui_generator.message_window(position=(300,150), dimension=(100,200), id='#warning', window_title='Alert!', always_on_top=True, html_message='The string sent is not a valid YouTube link, Try Again')
+                
+                if event.type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.message_window:
+                    self.convert_button.enable()
                 
                 self.gui_manager.process_events(event)
 

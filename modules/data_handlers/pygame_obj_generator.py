@@ -141,6 +141,21 @@ class GenerateUI:
         )
         return confirmation_window
     
+    def message_window(self, position:tuple, dimension:tuple, id:str, window_title :str, always_on_top:bool, html_message:str):
+
+        html_message = f'<b><font color=#FF5733 size=4>Warning</font></b><br><i>{html_message}</i>'
+    
+
+        message_window = pygame_gui.windows.UIMessageWindow(
+            rect=pygame.Rect(position, dimension),
+            manager=self.gui_manager,
+            object_id=id,
+            window_title=window_title,
+            always_on_top = always_on_top,
+            html_message = html_message
+        )
+        return message_window
+    
 
 
 

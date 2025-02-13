@@ -30,7 +30,8 @@
             {   
                 "normal_bg": "#5000C9",
                 "hovered_bg": "#6500FD",
-                "hovered_text": "#FFFFFF"
+                "hovered_text": "#FFFFFF",
+                "disabled_bg": "#3F009E"
             },
             "misc":
             {
