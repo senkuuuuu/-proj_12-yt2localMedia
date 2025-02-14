@@ -3,9 +3,9 @@ import re
 import time
 
 class LinkInformation:
-    def __init__(self, url, text_box):
+    def __init__(self, url, progress_log_list):
         self.url = url
-        self.text_box = text_box
+        self.progress_log_list = progress_log_list
        
     
     def get_metadata(self):
@@ -14,7 +14,7 @@ class LinkInformation:
             'quiet': False,  
             'noprogress': False,  
             'no_warnings': True,
-            'logger': Logger(self.text_box)
+            'logger': Logger(self.progress_log_list)
         }
         
         #fetch info from the video
@@ -45,24 +45,22 @@ class LinkInformation:
             return link_metadata
     
 class Logger:
-    def __init__(self, text_box):
-        self.text_box = text_box
+    def __init__(self, progress_log_list):
+        self.progress_log_list = progress_log_list
 
     def debug(self, msg):
         if any(keyword in msg for keyword in ["Downloading", "Extracting", "Fetching"]):
             time.sleep(1)
-            self.text_box.append_html_text(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> {msg}")  
-            self.text_box.rebuild()
+            self.progress_log_list.append(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> {msg}")  
 
     def warning(self, msg):
         time.sleep(1)
-        self.text_box.append_html_text(f"<br><font face='verdana' color='#FF6F00' size=3.5><b>[WARNING]</b></font> {msg}") 
-        self.text_box.rebuild()
-
+        self.progress_log_list.append(f"<br><font face='verdana' color='#FF6F00' size=3.5><b>[WARNING]</b></font> {msg}") 
+    
     def error(self, msg):
         time.sleep(1)
-        self.text_box.append_html_text(f"<br><font face='verdana' color='#FF0000' size=3.5><b>[ERROR]</b></font> {msg}")
-        self.text_box.rebuild()
+        self.progress_log_list.append(f"<br><font face='verdana' color='#FF0000' size=3.5><b>[ERROR]</b></font> {msg}")
+        
     
         
         

@@ -43,9 +43,10 @@ class DownloadWindow:
         self.logo_rect = self.logo.rect()
 
         #generating GUI elements
-        starting_text_fetching_log = "<font face='verdana' color='#6600FF' size=3.5><b>Fetching Log</b></font><br>"
+        self.starting_text_fetching_log = "<font face='verdana' color='#6600FF' size=3.5><b>Fetching Log</b></font><br>"
+        self.fetch_progress_log = []
         self.progress_bar = self.gui_generator.progressbar(position=(20,self.window_size[1]//2+100), dimension=(self.window_size[0]-30, 50), id='#progress_bar')
-        self.fetching_log = self.gui_generator.text_box(position=(20,self.window_size[1]//2), dimension=(self.window_size[0]-30, 200), id='#fetch_log', html_text=starting_text_fetching_log)
+        self.fetching_log = self.gui_generator.text_box(position=(20,self.window_size[1]//2), dimension=(self.window_size[0]-30, 200), id='#fetch_log', html_text=self.starting_text_fetching_log)
         
         self.download_label = self.gui_generator.label(position=(10, 300), dimension=(350,50), text=f'Downloading YoutTube Video as {self.file_type}...', id='#download_label')
         self.progress_bar.hide()
@@ -71,6 +72,11 @@ class DownloadWindow:
                 self.progress_bar.show()
                 self.fetching_log.hide()
                 download_playlist_thread.start()
+            
+            while self.fetch_progress_log:  
+                msg = self.fetch_progress_log.pop(0)  
+                self.fetching_log.append_html_text(msg)  
+                self.fetching_log.rebuild()
 
             #render objects
             self.screen.fill((0,0,0))
@@ -127,7 +133,7 @@ class DownloadWindow:
         self.status = True
     
     def fetch_link_metadata(self):
-        link_metadata = LinkInformation(self.video_url, self.fetching_log).get_metadata()
+        link_metadata = LinkInformation(self.video_url, self.fetch_progress_log).get_metadata()
 
         self.link_type = link_metadata.get('Type')
         self.title = link_metadata.get('Title')

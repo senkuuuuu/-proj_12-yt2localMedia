@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 import time
+import threading
 
 pygame.init()
 
@@ -21,12 +22,20 @@ text_box = pygame_gui.elements.UITextBox(
 # Main loop
 clock = pygame.time.Clock()
 running = True
+
+def loop():
+    while True:
+        time.sleep(1)
+        text_box.append_html_text('<b>Hello, world!</b> This is a <i>pygame_gui</i> text box. <br>')
+
+test = threading.Thread(target=loop)
+test.start()
+
 while running:
     time_delta = clock.tick(60) / 1000.0
 
-
-    time.sleep(1)
-    text_box.append_html_text('<b>Hello, world!</b> This is a <i>pygame_gui</i> text box. <br>')
+    
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -39,3 +48,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
