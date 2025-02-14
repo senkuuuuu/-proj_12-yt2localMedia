@@ -65,14 +65,14 @@ class SelectionWindow:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp3'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
                         
                     
                     elif event.ui_element == self.Mp4_button:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp4'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
                     
                 if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
                     self.path = event.text
