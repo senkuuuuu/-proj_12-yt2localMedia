@@ -38,7 +38,7 @@ class DownloadWindow:
         self.running = True
 
         #generating logo
-        self.logo = GenerateRect(scale=(400,200), position=(350,110), pygame_object=self.resources[3])
+        self.logo = GenerateRect(scale=(400,200), position=(400,110), pygame_object=self.resources[3])
         self.logo_scaled = self.logo.scaled()
         self.logo_rect = self.logo.rect()
 
@@ -61,6 +61,7 @@ class DownloadWindow:
         fetch_link_metadata.start()
 
         while self.running:
+            #running download threads if fetching thread is done
             if fetch_link_metadata.is_alive() == False and self.downloading == False and self.link_type == "Video":
                 #start converting and downloading single Video
                 self.download_label.show()
@@ -69,14 +70,16 @@ class DownloadWindow:
                 download_single_video_thread.start()
             elif fetch_link_metadata.is_alive() == False and self.downloading == False and self.link_type == "Playlist":
                 #start converting and downloading Videos in provided playlist link
+                self.download_label.show()
                 self.progress_bar.show()
                 self.fetching_log.hide()
                 download_playlist_thread.start()
             
-            while self.fetch_progress_log:  
-                msg = self.fetch_progress_log.pop(0)  
+            #updating fetch log
+            while self.fetch_progress_log:
+                msg = self.fetch_progress_log.pop(0)
+
                 self.fetching_log.append_html_text(msg)  
-                self.fetching_log.rebuild()
 
             #render objects
             self.screen.fill((0,0,0))

@@ -50,15 +50,12 @@ class Logger:
 
     def debug(self, msg):
         if any(keyword in msg for keyword in ["Downloading", "Extracting", "Fetching"]):
-            time.sleep(1)
             self.progress_log_list.append(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> {msg}")  
 
     def warning(self, msg):
-        time.sleep(1)
         self.progress_log_list.append(f"<br><font face='verdana' color='#FF6F00' size=3.5><b>[WARNING]</b></font> {msg}") 
     
     def error(self, msg):
-        time.sleep(1)
         self.progress_log_list.append(f"<br><font face='verdana' color='#FF0000' size=3.5><b>[ERROR]</b></font> {msg}")
         
     
