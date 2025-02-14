@@ -2,7 +2,6 @@ import pygame
 import pygame_gui
 from modules.data_handlers.pygame_obj_generator import *
 from modules.data_handlers.fetch_resource import *
-from modules.functionality.identify_video_information import *
 
 
 class SelectionWindow:
@@ -77,11 +76,10 @@ class SelectionWindow:
                     
                 if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
                     self.path = event.text
-                    self.link_metadata = LinkInformation(self.url).get_metadata()
                     self.running = False
 
                     self.conversion_metadata = {
-                        "Link_metadata": self.link_metadata,
+                        "Video_URL": self.url,
                         "File_type" : self.file_type,
                         "Path": self.path
                     }
