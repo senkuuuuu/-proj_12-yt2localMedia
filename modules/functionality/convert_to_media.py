@@ -25,7 +25,6 @@ class Convert:
             
 
     def Mp3(self):
-
         ydl_opts = {
             'outtmpl': f'{self.path}/{self.media_title}.%(ext)s',
             'format': 'bestvideo+bestaudio/best',
@@ -49,6 +48,7 @@ class Convert:
     def Mp4(self):
         check_available_audio_and_video = self.get_format_with_audio_and_video(self.media_url)
         ydl_opts = {
+                'cookies-from-browser': 'chrome',
                 'outtmpl': f'{self.path}/{self.media_title}.%(ext)s',
                 'format': check_available_audio_and_video[0],
                 'quiet': True,

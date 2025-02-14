@@ -2,6 +2,7 @@ import pygame
 import pygame_gui
 from modules.data_handlers.pygame_obj_generator import *
 from modules.data_handlers.fetch_resource import *
+from modules.functionality.identify_video_information import *
 
 
 class SelectionWindow:
@@ -65,20 +66,27 @@ class SelectionWindow:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp3'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
                         
                     
                     elif event.ui_element == self.Mp4_button:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp4'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='C:/Users')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
                     
                 if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
                     self.path = event.text
+                    self.link_metadata = LinkInformation(self.url).get_metadata()
                     self.running = False
 
-                    return [self.url, self.path, self.file_type]
+                    self.conversion_metadata = {
+                        "Link_metadata": self.link_metadata,
+                        "File_type" : self.file_type,
+                        "Path": self.path
+                    }
+
+                    return  self.conversion_metadata
                     
                 if event.type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.file_dialog:
                     for button in self.buttons:

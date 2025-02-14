@@ -85,7 +85,5 @@ class MainWindow:
         if parsed_url.netloc in ["www.youtube.com", "youtube.com", "youtu.be"]:
             self.running = False
             return result
-        else:
-            print('not yt link')
 
         

@@ -7,7 +7,7 @@ from modules.data_handlers.fetch_resource import *
 from  modules.functionality.convert_to_media import *
 
 class DownloadWindow:
-    def __init__(self,window_size, window_title, clock, fps, screen, media_data):
+    def __init__(self,window_size, window_title, clock, fps, screen, conversion_data:dict):
         #fetching app metadata
         self.window_title = window_title
         self.window_size = window_size
@@ -17,15 +17,19 @@ class DownloadWindow:
         self.status = False
 
         #media metadata
-        self.media_metadata = media_data
-        self.media_url = media_data[0]
-        self.path = media_data[1]
-        self.file_type = media_data[2]
+        self.conversion_data = conversion_data
+        self.file_type = self.conversion_data.get('File_type')
+        self.path = self.conversion_data.get('Path')
+        self.link_metadata = self.conversion_data.get('Link_metadata')
+
+        #link metadata
+        self.link_type = self.link_metadata.get('Type')
+        self.title = self.link_metadata.get('Title')
+        self.url = self.link_metadata.get('Url')
 
         #setting up screen
         self.screen = screen
         pygame.display.set_caption(self.window_title)
-
         #fetching resources
         self.resources = fetch(path='resources/icons').begin()
 
@@ -45,11 +49,16 @@ class DownloadWindow:
         self.progress_bar = self.gui_generator.progressbar(position=(20,self.window_size[1]//2+100), dimension=(self.window_size[0]-30, 50), id='#progress_bar')
         self.download_label = self.gui_generator.label(position=(10, 300), dimension=(350,50), text=f'Downloading YoutTube Video as {self.file_type}...', id='#download_label')
 
-        #start downloading
-        self.download_thread = threading.Thread(target=self.download)
-        self.download_thread.start()
 
     def run(self):
+        if self.link_type == "Video":
+            #start converting and downloading single Video
+            download_thread = threading.Thread(target=self.download_single_video)
+            download_thread.start()
+        elif self.link_type == "Playlist":
+            #start converting and downloading Videos in provided playlist link
+            download_thread = threading.Thread(target=self.download_playlist)
+            download_thread.start()
 
         while self.running:
 
@@ -77,11 +86,30 @@ class DownloadWindow:
                 self.gui_manager.process_events(event)
 
     
-    def download(self):
+    def download_single_video(self):
         if self.file_type == 'Mp3':
-            Convert(self.media_url, self.path, self.progress_bar).Mp3()
+            Convert(self.url, self.path, self.progress_bar).Mp3()
 
         elif self.file_type == 'Mp4':
-            Convert(self.media_url, self.path, self.progress_bar).Mp4()
+            Convert(self.url, self.path, self.progress_bar).Mp4()
         
         self.status = True
+    
+    def download_playlist(self):
+        path = os.path.join(self.path, self.title)
+        converted_videos = 0
+        for video_url in self.url:
+            if self.file_type == 'Mp3':
+                Convert(video_url, path, self.progress_bar).Mp3()
+            elif self.file_type == 'Mp4':
+                Convert(video_url, path, self.progress_bar).Mp4()
+            
+            converted_videos += 1
+            self.download_label.set_text(f'Downloadied {converted_videos} of {len(self.url)} Videos in the playlist as {self.file_type}...', id='#download_label')
+            self.progress_bar.set_current_progress(0)
+
+            if self.running == False:
+                break
+
+        self.status = True
+
