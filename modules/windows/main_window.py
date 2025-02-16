@@ -82,10 +82,8 @@ class MainWindow:
     def get_url(self):
         result =self.search_bar.get_text()
         parsed_url = urlparse(result)
-        if parsed_url.netloc in ["www.youtube.com", "youtube.com", "youtu.be"]:
+        if parsed_url.netloc in ["www.youtube.com", "youtube.com", "youtu.be", "invidious.snopyta.org", "inv.nadeko.net"]:
             self.running = False
             return result
-        else:
-            print('not yt link')
 
         

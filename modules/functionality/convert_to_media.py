@@ -25,7 +25,6 @@ class Convert:
             
 
     def Mp3(self):
-
         ydl_opts = {
             'outtmpl': f'{self.path}/{self.media_title}.%(ext)s',
             'format': 'bestvideo+bestaudio/best',
@@ -38,6 +37,8 @@ class Convert:
                 'preferredcodec': 'mp3',       
                 'preferredquality': '192',    
             }],
+
+            
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -60,7 +61,10 @@ class Convert:
                 'postprocessors': [{
                     'key': 'FFmpegVideoConvertor',
                     'preferedformat': 'mp4'
-                }]
+                }],
+
+                'username': 'senkuishigami460@gmail.com',
+                'password': 'mikumywaifu'
             }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -72,6 +76,8 @@ class Convert:
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
+
+            
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

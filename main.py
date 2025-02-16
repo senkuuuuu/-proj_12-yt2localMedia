@@ -15,17 +15,17 @@ clock = pygame.time.Clock()
 
 #setting up the screen
 screen = pygame.display.set_mode(window_size)
-
+   
 def download_window(window_size, window_title, clock, fps, screen, result):
     DownloadWindow(window_size, window_title, clock, fps, screen, result).run()
 
-def selection_window(window_size, window_title, clock, fps, screen, url):
-    result = SelectionWindow(window_size, window_title, clock, fps, screen, url).run()
-    download_window(window_size, window_title, clock, fps, screen, result)
+def selection_window(window_size, window_title, clock, fps, screen, YouTube_Link):
+    Conversion_metadata = SelectionWindow(window_size, window_title, clock, fps, screen, YouTube_Link).run()
+    download_window(window_size, window_title, clock, fps, screen, Conversion_metadata)
 
 def main_window(window_size, window_title, clock, fps, screen):
-    data = MainWindow(window_size, window_title, clock, fps, screen).run()
-    selection_window(window_size, window_title, clock, fps, screen, data)
+    YouTube_Link = MainWindow(window_size, window_title, clock, fps, screen).run()
+    selection_window(window_size, window_title, clock, fps, screen, YouTube_Link)
 
 
 main_window(window_size, window_title, clock, fps, screen)

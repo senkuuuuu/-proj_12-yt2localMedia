@@ -156,6 +156,14 @@ class GenerateUI:
         )
         return message_window
     
+    def text_box(self, position:tuple, dimension:tuple, id:str, html_text:str):
+        text_box = pygame_gui.elements.UITextBox(
+            relative_rect=pygame.Rect(position, dimension),
+            manager=self.gui_manager,
+            object_id=id,
+            html_text=html_text
+        )
+        return text_box
 
 
 

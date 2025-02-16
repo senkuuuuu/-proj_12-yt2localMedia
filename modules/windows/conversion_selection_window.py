@@ -78,7 +78,13 @@ class SelectionWindow:
                     self.path = event.text
                     self.running = False
 
-                    return [self.url, self.path, self.file_type]
+                    self.conversion_metadata = {
+                        "Video_URL": self.url,
+                        "File_type" : self.file_type,
+                        "Path": self.path
+                    }
+
+                    return  self.conversion_metadata
                     
                 if event.type == pygame_gui.UI_WINDOW_CLOSE and event.ui_element == self.file_dialog:
                     for button in self.buttons:
