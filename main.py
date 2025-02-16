@@ -26,5 +26,7 @@ def main_window(window_size, window_title, clock, fps, screen):
     YouTube_Link = MainWindow(window_size, window_title, clock, fps, screen).run()
     selection_window(window_size, window_title, clock, fps, screen, YouTube_Link)
 
-
-main_window(window_size, window_title, clock, fps, screen)
+try:
+    main_window(window_size, window_title, clock, fps, screen)
+except:
+    pass
