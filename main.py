@@ -1,5 +1,4 @@
 import pygame
-import pygame_gui
 from modules.windows.main_window import *
 from modules.windows.conversion_selection_window import *
 from modules.windows.download_window import *
