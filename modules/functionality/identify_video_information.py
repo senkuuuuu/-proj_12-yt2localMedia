@@ -1,6 +1,6 @@
 import yt_dlp
-import re
-import time
+import os
+import html
 
 class LinkInformation:
     def __init__(self, url, progress_log_list):
@@ -14,7 +14,7 @@ class LinkInformation:
             'quiet': False,  
             'noprogress': False,  
             'no_warnings': True,
-            'logger': Logger(self.progress_log_list)
+            'logger': Logger(self.progress_log_list),
         }
         
         #fetch info from the video
@@ -23,7 +23,6 @@ class LinkInformation:
 
         #check if playlist or single video
         if 'entries' in info:
-            print('playlist')
             playlist_name = info.get('title', 'Unknown Playlist')
             video_urls = [entry.get('webpage_url', f"https://www.youtube.com/watch?v={entry['id']}") for entry in info['entries']]
             link_metadata = {
@@ -31,7 +30,6 @@ class LinkInformation:
                 "Title": playlist_name,
                 "Url": video_urls
             }
-            print(video_urls)
             return link_metadata
         else:
             print('video')
@@ -47,16 +45,22 @@ class LinkInformation:
 class Logger:
     def __init__(self, progress_log_list):
         self.progress_log_list = progress_log_list
+        self.download_count = 0
 
     def debug(self, msg):
-        if any(keyword in msg for keyword in ["Downloading", "Extracting", "Fetching"]):
-            self.progress_log_list.append(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> {msg}")  
+        safe_msg = html.escape(msg)
+        if any(keyword in msg for keyword in ["Extracting", "Fetching"]):
+            self.progress_log_list.append(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> <font face='verdana' color='#55FF00' size=3.5><b>Fetched {self.download_count} videos</b></font>")
+            self.progress_log_list.append(f"<br><font face='verdana' color='#0077FF' size=3.5><b>[DEBUG]</b></font> {safe_msg}")
+            self.download_count += 1
 
     def warning(self, msg):
-        self.progress_log_list.append(f"<br><font face='verdana' color='#FF6F00' size=3.5><b>[WARNING]</b></font> {msg}") 
+        safe_msg = html.escape(msg)
+        self.progress_log_list.append(f"<br><font face='verdana' color='#FF6F00' size=3.5><b>[WARNING]</b></font> {safe_msg}") 
     
     def error(self, msg):
-        self.progress_log_list.append(f"<br><font face='verdana' color='#FF0000' size=3.5><b>[ERROR]</b></font> {msg}")
+        safe_msg = html.escape(msg)
+        self.progress_log_list.append(f"<br><font face='verdana' color='#FF0000' size=3.5><b>[ERROR]</b></font> {safe_msg}")
         
     
         

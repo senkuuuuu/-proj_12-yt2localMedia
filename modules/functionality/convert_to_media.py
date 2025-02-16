@@ -37,6 +37,8 @@ class Convert:
                 'preferredcodec': 'mp3',       
                 'preferredquality': '192',    
             }],
+
+            
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -48,7 +50,6 @@ class Convert:
     def Mp4(self):
         check_available_audio_and_video = self.get_format_with_audio_and_video(self.media_url)
         ydl_opts = {
-                'cookies-from-browser': 'chrome',
                 'outtmpl': f'{self.path}/{self.media_title}.%(ext)s',
                 'format': check_available_audio_and_video[0],
                 'quiet': True,
@@ -60,7 +61,10 @@ class Convert:
                 'postprocessors': [{
                     'key': 'FFmpegVideoConvertor',
                     'preferedformat': 'mp4'
-                }]
+                }],
+
+                'username': 'senkuishigami460@gmail.com',
+                'password': 'mikumywaifu'
             }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -72,6 +76,8 @@ class Convert:
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
+
+            
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

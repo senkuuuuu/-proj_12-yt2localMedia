@@ -16,6 +16,7 @@
             }
                 
         },
+        
     "#download_label":
         {
             
@@ -31,5 +32,48 @@
                     "italic": "0"
                 }
                 
+        },
+
+    "#warning":
+        {
+            "colours":
+            {
+               "dark_bg":"#300077",
+               "normal_border": "#26005E"
+            },
+      
+            "misc":
+            {
+               "shape": "rounded_rectangle",
+               "shape_corner_radius": "20",
+               "border_width": "3",
+               "shadow_width": "15",
+               "enable_title_bar": "0"
+            }
+        },
+    "#warning.#dismiss_button":
+        {
+            "colours":
+            {   
+                "normal_bg": "#5000C9",
+                "hovered_bg": "#6500FD",
+                "hovered_text": "#FFFFFF",
+                "disabled_bg":"#4100A2"
+            },
+            "misc":
+            {
+                "shape": "rounded_rectangle",
+                "shape_corner_radius": "25,25,25,25",
+                "border_width": "2",
+                "shadow_width": "2"
+            }
+        },
+    "#warning.text_box":
+        {
+            "colours":
+                {
+                "dark_bg":"#300077",
+                "normal_border": "#300077"
+                }
         }
 }

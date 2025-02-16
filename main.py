@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 
 #setting up the screen
 screen = pygame.display.set_mode(window_size)
-
+   
 def download_window(window_size, window_title, clock, fps, screen, result):
     DownloadWindow(window_size, window_title, clock, fps, screen, result).run()
 
