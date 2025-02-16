@@ -1,7 +1,9 @@
 import pygame
 import pygame_gui
+from pathlib import Path
 from modules.data_handlers.pygame_obj_generator import *
 from modules.data_handlers.fetch_resource import *
+import sys
 
 
 class SelectionWindow:
@@ -12,6 +14,7 @@ class SelectionWindow:
         self.clock = clock
         self.fps = fps
         self.time_delta = self.clock.tick(self.fps)/1000.0
+        self.user_path = Path.home()
 
         #important media metadata
         self.url = url
@@ -59,20 +62,21 @@ class SelectionWindow:
                 if event.type == pygame.QUIT:
                     self.running = False
                     pygame.quit()
+                    sys.exit()
                 
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == self.Mp3_button:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp3'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path=f'{self.user_path}/Music')
                         
                     
                     elif event.ui_element == self.Mp4_button:
                         for button in self.buttons:
                             button.disable()
                         self.file_type = 'Mp4'
-                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path='D:/')
+                        self.file_dialog = self.gui_generator.filedialog(position=(300, 150), dimension=(200,200), text='Select Path to save Media',  id='#file_dialog', initial_path=f'{self.user_path}/Videos')
                     
                 if event.type == pygame_gui.UI_FILE_DIALOG_PATH_PICKED:
                     self.path = event.text
