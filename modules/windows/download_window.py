@@ -18,8 +18,11 @@ class DownloadWindow:
         self.clock = clock
         self.fps = fps
         self.time_delta = self.clock.tick(self.fps)/1000.0
+
+        #setting up flags
         self.status = False
         self.downloading = False
+        self.fetching = False
 
         #media metadata
         self.conversion_data = conversion_data
@@ -57,9 +60,9 @@ class DownloadWindow:
 
     def run(self):
         #initialize threads
-        fetch_link_metadata = threading.Thread(target=self.fetch_link_metadata)
-        download_single_video_thread = threading.Thread(target=self.download_single_video)
-        download_playlist_thread = threading.Thread(target=self.download_playlist)
+        fetch_link_metadata = threading.Thread(target=self.fetch_link_metadata, daemon=True)
+        download_single_video_thread = threading.Thread(target=self.download_single_video, daemon=True)
+        download_playlist_thread = threading.Thread(target=self.download_playlist, daemon=True)
 
         fetch_link_metadata.start()
 
@@ -105,9 +108,17 @@ class DownloadWindow:
             #event handler
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
+                    confirmation_desc = "<p>Do you want to cancel the process?</p><p><font face='verdana' color='#FF0000' size=3.5><b>WARNING:</b></font> Some files might be corrupted due to an unfinished process.</p>"
+                    confirmation = self.gui_generator.confirmation_window(position=((self.window_size[0]//2)-125,(self.window_size[1]//2)-125), dimension=(250,250), id='#confirmation_window', window_title='Confirmation', blocking=True, long_desc=confirmation_desc)
+                    
+                if event.type == pygame_gui.UI_CONFIRMATION_DIALOG_CONFIRMED:
+                    if event.ui_element == confirmation:
+                        self.running = False
+                        pygame.quit()
+                        sys.exit()
+                
+                if self.status:
+                    self.gui_generator.message_window(position=(300,150), dimension=(100,200), id='#warning',window_title='Alert', always_on_top=True,html_message=f'the process completed successfully')
                 
                 self.gui_manager.process_events(event)
 
@@ -131,6 +142,7 @@ class DownloadWindow:
             converted_videos = 0
 
             for video_url in self.url:
+
                 #check desired file type
                 if self.file_type == 'Mp3':
                     Convert(video_url, path, self.progress_bar).Mp3()
@@ -143,14 +155,14 @@ class DownloadWindow:
                 self.download_label.set_text(f'Downloadied {converted_videos} of {len(self.url)} Videos in the playlist as {self.file_type}...')
                 self.progress_bar.set_current_progress(0)
 
-                if self.running == False:
-                    break
+            
 
             self.status = True
         except:
             self.gui_generator.message_window(position=(300,150), dimension=(100,200), id='#warning',window_title='Alert', always_on_top=True,html_message=f'the process timed out, try again')
     
     def fetch_link_metadata(self):
+        self.fetching = True
         try:
             link_metadata = LinkInformation(self.video_url, self.fetch_progress_log).get_metadata()
 
@@ -159,6 +171,7 @@ class DownloadWindow:
             self.url = link_metadata.get('Url')
         except:
             self.gui_generator.message_window(position=(300,150), dimension=(100,200), id='#warning',window_title='Alert', always_on_top=True,html_message=f'something went wrong during the fetching process check the fetching log for more details and try again')
+        self.fetching = False
 
     def sanitize_filenames(self, filename):
         # Remove invalid characters
