@@ -1,5 +1,4 @@
 import yt_dlp
-import os
 import html
 
 class LinkInformation:

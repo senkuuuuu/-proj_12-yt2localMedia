@@ -1,6 +1,6 @@
 import yt_dlp
 import re 
-import os
+from yt_dlp.postprocessor import FFmpegPostProcessor
 
 class Convert:
     def __init__(self, media_url:str , path:str, progress_bar=None):
@@ -36,7 +36,7 @@ class Convert:
                 'key': 'FFmpegExtractAudio',   
                 'preferredcodec': 'mp3',       
                 'preferredquality': '192',    
-            }],
+            }]
 
             
         }
@@ -61,10 +61,7 @@ class Convert:
                 'postprocessors': [{
                     'key': 'FFmpegVideoConvertor',
                     'preferedformat': 'mp4'
-                }],
-
-                'username': 'senkuishigami460@gmail.com',
-                'password': 'mikumywaifu'
+                }]
             }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:

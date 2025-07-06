@@ -11,10 +11,15 @@ Step 1: clone the repository
 ```bash
 git clone https://github.com/senkuuuuu/-proj_12-yt2localMedia.git
 ```
-Step 2: use pyinstaller to make exe file for the codebase
+Step 2: Install dependencies, you can make a virtual environment if you want to
+```bash
+pip install -r requirements.txt
+```
+Step 3: use pyinstaller to make exe file for the codebase
 ```bash
 pyinstaller --onefile --name=YouTube2LocalMedia --icon=logo.ico --add-data "resources;resources" --windowed main.py
 ```
+
 <b>NOTE:</b> for this to work you must have the following installed in your device
 - ffmpeg
 - python
@@ -24,7 +29,7 @@ pyinstaller --onefile --name=YouTube2LocalMedia --icon=logo.ico --add-data "reso
 - pygame_gui
 - pyinstalller
 
-<b>Option 2:</b> download the already available exe file in the repository located at \dist
+<b>Option 2:</b> download the already available exe file in the repository located at \dist, ffmpeg not included
 
 ---
 
@@ -38,6 +43,7 @@ pyinstaller --onefile --name=YouTube2LocalMedia --icon=logo.ico --add-data "reso
 ### ⛓️ Limitations
 - can't convert membership only videos
 - can't convert age restricted videos
+- not cross platform only works on desktop
 ---
 
 ### ⚒️ Build
