@@ -6,7 +6,6 @@
 Greetings, this is the documentation for YouTube to Local Media converter, a simple tool equipped with GUI that is created by senkuuu for the purpose of converting youtube videos into either Mp3 or Mp4
 
 ### 🖥️ Installation
-<b>Option 1:</b> cloning the repository and making an exe file for the codebase in your own local device<br>
 Step 1: clone the repository
 ```bash
 git clone https://github.com/senkuuuuu/-proj_12-yt2localMedia.git
@@ -25,11 +24,6 @@ pyinstaller --onefile --name=YouTube2LocalMedia --icon=logo.ico --add-data "reso
 - python
 - git
 - this repository
-- pygame
-- pygame_gui
-- pyinstalller
-
-<b>Option 2:</b> download the already available exe file in the repository located at \dist, ffmpeg not included
 
 ---
 
@@ -43,19 +37,24 @@ pyinstaller --onefile --name=YouTube2LocalMedia --icon=logo.ico --add-data "reso
 ### ⛓️ Limitations
 - can't convert membership only videos
 - can't convert age restricted videos
-- not cross platform only works on desktop
+- not cross platform only works on windows
 ---
 
 ### ⚒️ Build
 - backend uses yt-dlp and ffmpeg
 - frontend uses pygame and pygame_gui
+- packaged using pyinstaller
+---
+
+### 💡 Keep in mind
+- always make sure that the app is up-to-date to the latest version of yt-dlp, otherwise you might encounter unexpocted errors.
 ---
 
 ## 📝 To do
-- codebase optimizations
-- optimize error handling
 - add cookie fetcher or authentication for yt-dlp to have access on age restricted videos
 - bypass membership only videos
+- add auto-update for the yt-dlp module
+- allow for the ffmpeg to be packaged along with the app
 ---
 
 ## 👀 Preview
